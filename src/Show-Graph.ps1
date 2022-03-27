@@ -150,7 +150,7 @@ Function Show-Graph {
         For($j=0;$j -lt $NumOfDatapoints;$j++){
             $Cell = $Array[$i,$j]
             if([String]::IsNullOrWhiteSpace($Cell)){
-                if($AddHorizontalLines){
+                if($HorizontalLines){
                     $String = [Char]9472
                 }
                 else{
@@ -164,9 +164,9 @@ Function Show-Graph {
         }
         
         $YAxisLabel = $StartOfRange + $i*$YAxisStep
-        
-        
-        # add Y-Axis title alphabets if it exists in a row
+		
+		
+		 # add Y-Axis title alphabets if it exists in a row
         If($i -in $YAxisTitleStartIdx..$YAxisTitleEndIdx -and $YAxisTitle){
             $YAxisLabelAlphabet = $YAxisTitle[$YAxisTitleAlphabetCounter]
             $YAxisTitleAlphabetCounter++
@@ -236,11 +236,11 @@ Function Show-Graph {
 
     
     if(![String]::IsNullOrWhiteSpace($XAxisTitle)){
-        # Position the x-axis label at the center of the axis
+        # Position the x-axis title at the center of the axis
         $XAxisTitle = " "*$LengthOfMaxYAxisLabel + (CenterAlignString $XAxisTitle $XAxis.Length)        
         Write-Host -Object $VerticalEdge -NoNewline
         Write-Host -Object $XAxisTitle -ForegroundColor DarkYellow -NoNewline # Prints XAxisTitle
-        Write-Host -Object $(" "*$(($LengthOfMaxYAxisLabel + $XAxis.length) - $XAxisTitle.Length - 2)) $VerticalEdge
+        Write-Host -Object $(" "*$($XAxis.length - $XAxisTitle.Length + 1)) $VerticalEdge # replaced '-2' with '+1', removed LengthOfMaxYAxisLabel as this will change.
     }
     
     # bottom boundary
